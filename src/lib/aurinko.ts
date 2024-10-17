@@ -27,7 +27,16 @@ export const exchangeCodeForAccessToken = async (code: string) => {
                 password: process.env.AURINKO_CLIENT_SECRET as string
             }
         })
+
+        return response.data as {
+            accoundId: number,
+            accessToken: string,
+            userId: string,
+            userSession: string
+        }
     } catch (error) {
-        
+        if (axios.isAxiosError(error)) {
+            console.error(error.response?.data)
+        }
     }
 }
