@@ -37,6 +37,31 @@ export const exchangeCodeForAccessToken = async (code: string) => {
     } catch (error) {
         if (axios.isAxiosError(error)) {
             console.error(error.response?.data)
+        } else {
+            console.error('Unexpected')
         }
+        throw error
+    }
+}
+
+export const getAccountDetails = async (accessToken: string) =>  {
+    try {
+        const response = await axios.get('https://api.aurinko.io/v1/account', {
+            headers: {
+                'Authorization': `Bearer ${accessToken}` //accessToken specific to user
+            }
+        })
+
+        return response.data as {
+            email: string,
+            name: string
+        }
+    } catch (error) {
+        if (axios.isAxiosError(error)) {
+            console.error(error.response?.data)
+        } else {
+            console.error('Unexpected')
+        }
+        throw error
     }
 }
