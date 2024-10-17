@@ -1,5 +1,6 @@
 import { auth } from "@clerk/nextjs/server"
 import { NextRequest, NextResponse } from "next/server";
+import { exchangeCodeForAccessToken } from "~/lib/aurinko";
 
 export const GET = async (req: NextRequest) => {
     const {userId} = await auth()
@@ -12,7 +13,12 @@ export const GET = async (req: NextRequest) => {
     if (status != 'success') return NextResponse.json({message: 'Failed to link account'}, {status: 400})
     
     const code = params.get('code')
-    if (code != 'success') return NextResponse.json({message: 'Failed to link account'}, {status: 400})
+    if (!code) return NextResponse.json({message: 'No code'}, {status: 400})
+
+    const token = await exchangeCodeForAccessToken(code)
+
+    if (!token) return NextResponse.json({message: 'Failed to exchange code with token'}, {status: 400})
+
     
         console.log(userId);
 
