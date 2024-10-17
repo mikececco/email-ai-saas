@@ -1,6 +1,14 @@
+import LinkAccountButton from "~/components/ui/link-account-button";
+
 export default async function Home() {
 
   return (
-    <h1 className="text-4xl font-bold">Hello World</h1>
+
+    <div>
+
+      <h1 className="text-4xl font-bold">Hello World</h1>
+
+      <LinkAccountButton />
+    </div>
   );
 }
