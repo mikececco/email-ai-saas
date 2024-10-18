@@ -24,23 +24,21 @@ export const GET = async (req: NextRequest) => {
     const accountDetails = await getAccountDetails(token.accessToken)    
 
     await db.account.upsert({
-        where: {
-            id: token.accountId.toString()
-        },
-        update: {
-            accessToken: token.accessToken
-        },
+        where: { id: token.accountId.toString() },
         create: {
             id: token.accountId.toString(),
             userId,
+            accessToken: token.accessToken,
             emailAddress: accountDetails.email,
-            name: accountDetails.name,
-            accessToken: token.accessToken
+            name: accountDetails.name
+        },
+        update: {
+            accessToken: token.accessToken,
         }
     }) //update if exists or insert if not
 
-    
 
-    return NextResponse.json({ message: 'Hello' }, { status: 200 });
+
+    return NextResponse.redirect(new URL('/mail', req.url));
     
 }
