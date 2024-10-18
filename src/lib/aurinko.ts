@@ -29,7 +29,7 @@ export const exchangeCodeForAccessToken = async (code: string) => {
         })
 
         return response.data as {
-            accoundId: number,
+            accountId: number,
             accessToken: string,
             userId: string,
             userSession: string
