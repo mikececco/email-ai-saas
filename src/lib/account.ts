@@ -23,9 +23,12 @@ export class Account {
 
     async performInitialSync() {
         try {
-            let syncResponse = await this.startSync(
+            let syncResponse = await this.startSync()
 
-            )
+            while (!syncResponse.ready) {
+                await new Promise(resolve => setTimeout(resolve, 1000))
+                let syncResponse = await this.startSync()
+            }
         } catch (error) {
             
         }
