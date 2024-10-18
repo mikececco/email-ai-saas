@@ -1,4 +1,5 @@
 import axios from "axios"
+import { SyncResponse } from "./types"
 
 export class Account {
     private token: string
@@ -8,7 +9,7 @@ export class Account {
     }
 
     private async startSync() {
-        const response = await axios.post('https://api.aurinko.io/v1/email/sync', {}, {
+        const response = await axios.post<SyncResponse>('https://api.aurinko.io/v1/email/sync', {}, {
             headers: {
                 Authorization: `Bearer ${this.token}`,
             },
