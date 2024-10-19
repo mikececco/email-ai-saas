@@ -11,12 +11,12 @@ datasource db {
 }
 
 model User {
-    id String @id @default(cuid())
-    email String @unique
+    id        String    @id @default(cuid())
+    email     String    @unique
     firstName String?
-    lastName String?
-    imageUrl String?
-    accounts Account[]
+    lastName  String?   // Change this line to allow null values
+    imageUrl  String?
+    accounts  Account[]
     createdAt DateTime @default(now())
     updatedAt DateTime @updatedAt
 }

@@ -25,6 +25,8 @@ export const GET = async (req: NextRequest) => {
     
     const accountDetails = await getAccountDetails(token.accessToken)    
 
+    console.log(userId);
+    
     await db.account.upsert({
         where: { id: token.accountId.toString() },
         create: {
