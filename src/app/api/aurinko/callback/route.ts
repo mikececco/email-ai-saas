@@ -18,7 +18,7 @@ export const GET = async (req: NextRequest) => {
     const code = params.get('code')
     if (!code) return NextResponse.json({message: 'No code'}, {status: 400})
 
-    const token = await exchangeCodeForAccessToken(code)
+    const token = await exchangeCodeForAccessToken(code as string)
 
     if (!token) return NextResponse.json({message: 'Failed to exchange code with token'}, {status: 400})
 
@@ -40,14 +40,13 @@ export const GET = async (req: NextRequest) => {
     }) //update if exists or insert if not
 
     // trigger initial sync
+    console.log('Trigger sync');
     waitUntil(
-        axios.post(`${process.env.NEXT_PUBLIC_URL}/api/initial-sync`, {
-            accountId: token.accountId.toString(),
-            userId
-        }).then(response => {
-            console.log('Initial sync triggered');
-        }).catch(error => {
-            console.error('Failed');
+
+        axios.post(`${process.env.NEXT_PUBLIC_URL}/api/initial-sync`, { accountId: token.accountId.toString(), userId }).then((res) => {
+            console.log(res.data)
+        }).catch((err) => {
+            console.log(err.response.data)
         })
     )
 

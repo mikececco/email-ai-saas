@@ -27,6 +27,9 @@ export const exchangeCodeForAccessToken = async (code: string) => {
                 password: process.env.AURINKO_CLIENT_SECRET as string
             }
         })
+        console.log('EXCHANGED TOKENEENENNE:');
+        
+        console.log(response.data);
 
         return response.data as {
             accountId: number,
@@ -34,6 +37,7 @@ export const exchangeCodeForAccessToken = async (code: string) => {
             userId: string,
             userSession: string
         }
+
     } catch (error) {
         if (axios.isAxiosError(error)) {
             console.error(error.response?.data)
