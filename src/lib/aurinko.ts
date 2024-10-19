@@ -27,7 +27,7 @@ export const exchangeCodeForAccessToken = async (code: string) => {
                 password: process.env.AURINKO_CLIENT_SECRET as string
             }
         })
-        console.log('EXCHANGED TOKENEENENNE:');
+        console.log('EXCHANGED TOKEN:');
         
         console.log(response.data);
 
