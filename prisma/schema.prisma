@@ -28,6 +28,8 @@ model Account { //one User can have many accounts
     accessToken String @unique
     emailAddress String
     name String
+
+    nextDeltaToken String?
     createdAt DateTime @default(now())
     updatedAt DateTime @updatedAt
 
