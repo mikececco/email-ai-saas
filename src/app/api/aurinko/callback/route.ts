@@ -34,7 +34,8 @@ export const GET = async (req: NextRequest) => {
             userId,
             accessToken: token.accessToken,
             emailAddress: accountDetails.email,
-            name: accountDetails.name
+            name: accountDetails.name,
+            provider: 'Aurinko',
         },
         update: {
             accessToken: token.accessToken,
