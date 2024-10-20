@@ -35,14 +35,14 @@ export const POST = async (req: NextRequest) => {
     console.log(emails);
     
 
-    // await db.account.update({
-    //     where:{
-    //         id: accountId
-    //     },
-    //     data: {
-    //         nextDeltaToken: deltaToken
-    //     }
-    // })
+    await db.account.update({
+        where:{
+            id: accountId
+        },
+        data: {
+            nextDeltaToken: deltaToken
+        }
+    })
 
     await syncEmailsToDatabase(emails, accountId)
 

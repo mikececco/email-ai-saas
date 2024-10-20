@@ -4,7 +4,7 @@ import { db } from "~/server/db";
 export async function POST(req: NextRequest) {
     const { data } = await req.json();
 
-    const email = data.email_addresses[0].email_address;
+    const emailAddress = data.email_addresses[0].email_address;
 
     const firstName = data.first_name;
     const lastName = data.last_name;
@@ -13,7 +13,7 @@ export async function POST(req: NextRequest) {
 
     await db.user.create({
         data: {
-            email,
+            emailAddress,
             firstName,
             lastName,
             imageUrl,
