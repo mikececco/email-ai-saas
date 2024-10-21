@@ -24,8 +24,6 @@ export const GET = async (req: NextRequest) => {
 
     
     const accountDetails = await getAccountDetails(token.accessToken)    
-
-    console.log(userId);
     
     await db.account.upsert({
         where: { id: token.accountId.toString() },
@@ -43,11 +41,8 @@ export const GET = async (req: NextRequest) => {
     }) //update if exists or insert if not
 
     // trigger initial sync
-    console.log('Trigger sync');
     waitUntil(
-
         axios.post(`${process.env.NEXT_PUBLIC_URL}/api/initial-sync`, { accountId: token.accountId.toString(), userId }).then((res) => {
-            console.log(res.data)
         }).catch((err) => {
             console.log(err.response.data)
         })

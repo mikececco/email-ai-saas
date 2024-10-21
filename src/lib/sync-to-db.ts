@@ -9,7 +9,10 @@ export async function syncEmailsToDatabase(emails: EmailMessage[], accountId: st
     const limit = pLimit(10)
 
     try {
-        await Promise.all(emails.map((email, index) => upsertEmail(email, accountId, index))) //concurrent database connections
+        for (const email of emails) {
+            await upsertEmail(email, accountId, 0)
+        }
+        // await Promise.all(emails.map((email, index) => upsertEmail(email, accountId, index))) //concurrent database connections
         
     } catch (error) {
         console.error(error);
