@@ -2,6 +2,8 @@
 
 import React, { useState } from 'react'
 import { ResizableHandle, ResizablePanel, ResizablePanelGroup } from '~/components/ui/resizable'
+import { Separator } from '~/components/ui/separator'
+import { Tabs, TabsList, TabsTrigger } from '~/components/ui/tabs'
 import { TooltipProvider } from '~/components/ui/tooltip'
 import { cn } from '~/lib/utils'
 
@@ -37,10 +39,29 @@ const Mail = ({defaultLayout = [20,32,48], navCollapsedSize, defaultCollapsed} :
                 {/* Account Switcher */}
                 Account Switcher
             </div>
+            <Separator />
+            Sidebar
+            <div className='flex-1'>
+            </div>
+            Ask AI
         </div>
       </ResizablePanel>
       <ResizableHandle withHandle />
-      <ResizablePanel>Two</ResizablePanel>
+      <ResizablePanel defaultSize={defaultLayout[1]} minSize={30}>
+        <Tabs defaultValue='inbox'>
+          <div className='flex items-center px-4 py-2'>
+            <h1 className='text-xl font-bold'>Inbox</h1>
+            <TabsList className='ml-auto'>
+              <TabsTrigger value='inbox' className='text-zinc-600 dark:text-zinc-200'>
+                Inbox
+              </TabsTrigger>
+              <TabsTrigger value='done' className='text-zinc-600 dark:text-zinc-200'>
+                Done
+              </TabsTrigger>
+            </TabsList>
+          </div>
+        </Tabs>
+      </ResizablePanel>
     </ResizablePanelGroup>
     </TooltipProvider>
   )
