@@ -3,7 +3,7 @@
 import React, { useState } from 'react'
 import { ResizableHandle, ResizablePanel, ResizablePanelGroup } from '~/components/ui/resizable'
 import { Separator } from '~/components/ui/separator'
-import { Tabs, TabsList, TabsTrigger } from '~/components/ui/tabs'
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '~/components/ui/tabs'
 import { TooltipProvider } from '~/components/ui/tooltip'
 import { cn } from '~/lib/utils'
 
@@ -60,7 +60,20 @@ const Mail = ({defaultLayout = [20,32,48], navCollapsedSize, defaultCollapsed} :
               </TabsTrigger>
             </TabsList>
           </div>
+
+          <Separator />
+          Searchbar
+          <TabsContent value='inbox'>
+            inbox
+          </TabsContent>
+          <TabsContent value='done'>
+            done
+          </TabsContent>
         </Tabs>
+      </ResizablePanel>
+      <ResizableHandle withHandle />
+      <ResizablePanel defaultSize={defaultLayout[2]} minSize={30}>
+        Thread Display
       </ResizablePanel>
     </ResizablePanelGroup>
     </TooltipProvider>
