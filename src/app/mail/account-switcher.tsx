@@ -4,6 +4,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '~
 import { api } from '~/trpc/react'
 import { useLocalStorage } from 'usehooks-ts'
 import { cn } from '~/lib/utils'
+
 type Props = {
     isCollapsed: boolean
 }
