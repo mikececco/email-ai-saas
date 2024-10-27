@@ -1,7 +1,7 @@
 import React from 'react'
 import { useLocalStorage } from 'usehooks-ts'
 import { Nav } from './nav'
-import { Inbox } from 'lucide-react'
+import { File, Inbox, Send } from 'lucide-react'
 
 type Props = {
     isCollapsed: boolean
@@ -17,7 +17,19 @@ const Sidebar = ({isCollapsed} : Props) => {
                     label: '1',
                     icon: Inbox,
                     variant: 'default'
-                }
+                },
+                {
+                    title: 'Draft',
+                    label: '4',
+                    icon: File,
+                    variant: 'ghost' 
+                },
+                {
+                    title: 'Sent',
+                    label: '6',
+                    icon: Send,
+                    variant: 'ghost'
+                },
             ]
         } />
     )
