@@ -1,5 +1,5 @@
 'use client'
-import { useState } from 'react'
+
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '~/components/ui/select'
 import { api } from '~/trpc/react'
 import { useLocalStorage } from 'usehooks-ts'
@@ -16,6 +16,8 @@ const AccountSwitcher  = ({isCollapsed}: Props) => {
     const { data: accounts, isLoading, error } = api.account.getAccounts.useQuery()
     const [accountId, setAccountId] = useLocalStorage('accountId', '') //persitent in local memory as opposed to alternative useState<string | null>(null)
 
+    if (isLoading) return <div>Loading accounts...</div>
+    if (error) return <div>Error loading accounts: {error.message}</div>
     if (!accounts || accounts.length === 0) return <div>No accounts found</div>
 
     return (
