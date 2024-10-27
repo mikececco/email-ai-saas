@@ -5,6 +5,7 @@ import { api } from '~/trpc/react'
 import { useLocalStorage } from 'usehooks-ts'
 import { cn } from '~/lib/utils'
 import { Plus } from 'lucide-react'
+import { getAurinkoAuthUrl } from '~/lib/aurinko'
 
 type Props = {
     isCollapsed: boolean
@@ -53,7 +54,11 @@ const AccountSwitcher  = ({isCollapsed}: Props) => {
                             </SelectItem>
                         )
                     })}
-                    <div className='flex relative outline-none focus:bg-accent rounded-sm py-1.5 pl-2 pr-8 text-sm hover:bg-gray-50 w-full cursor-pointer items-center'>
+                    <div onClick={async () => {
+                        const authUrl = await getAurinkoAuthUrl('Google')
+
+                        window.location.href = authUrl
+                    }} className='flex relative outline-none focus:bg-accent rounded-sm py-1.5 pl-2 pr-8 text-sm hover:bg-gray-50 w-full cursor-pointer items-center'>
                         <Plus className='size-4 mr-1'/>
                         Add account
                     </div>
