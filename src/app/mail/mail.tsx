@@ -7,6 +7,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '~/components/ui/tabs'
 import { TooltipProvider } from '~/components/ui/tooltip'
 import { cn } from '~/lib/utils'
 import AccountSwitcher from './account-switcher'
+import Sidebar from './sidebar'
 
 type Props = {
     defaultLayout: number[] | undefined
@@ -41,7 +42,7 @@ const Mail = ({defaultLayout = [20,32,48], navCollapsedSize, defaultCollapsed} :
                 <AccountSwitcher isCollapsed={isCollapsed}/>
             </div>
             <Separator />
-            Sidebar
+            <Sidebar isCollapsed={isCollapsed} />
             <div className='flex-1'>
             </div>
             Ask AI
