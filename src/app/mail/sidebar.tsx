@@ -9,6 +9,7 @@ type Props = {
 
 const Sidebar = ({isCollapsed} : Props) => {
     const [accountId] = useLocalStorage('accountId', '') //accessible everywhere
+    const [tab] = useLocalStorage<'inbox' | 'draft' | 'sent'>('email-tab', 'inbox')
     return (
         <Nav isCollapsed={isCollapsed} links={
             [
@@ -16,19 +17,19 @@ const Sidebar = ({isCollapsed} : Props) => {
                     title: 'Inbox',
                     label: '1',
                     icon: Inbox,
-                    variant: 'default'
+                    variant: tab === 'inbox' ? 'default' : 'ghost'
                 },
                 {
                     title: 'Draft',
                     label: '4',
                     icon: File,
-                    variant: 'ghost' 
+                    variant: tab === 'draft' ? 'default' : 'ghost'
                 },
                 {
                     title: 'Sent',
                     label: '6',
                     icon: Send,
-                    variant: 'ghost'
+                    variant: tab === 'sent' ? 'default' : 'ghost'
                 },
             ]
         } />
