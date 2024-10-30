@@ -56,4 +56,30 @@ export const accountRouter = createTRPCRouter({ //to group different routes toge
             }
         })
     }),
+    getThreads: privateProcedure.input(z.object({
+        accountId: z.string(),
+        tab: z.string(),
+        done: z.boolean().optional()
+    })).query(async({
+        ctx, input
+    }) => {
+        const account = await authoriseAccountAccess(input.accountId, ctx.auth.userId)
+
+        let filter: Prisma.ThreadWhereInput = {}
+
+        if (input.tab === 'inbox') {
+            filter.inboxStatus = true
+        } else if (input.tab === 'draft') {
+            filter.draftStatus = true
+        } else if (input.tab === 'sent') {
+            filter.sentStatus = true
+        }
+
+        return await ctx.db.thread.count({
+            where: {
+                accountId: account.id,
+                ...filter
+            }
+        })
+    }),
 })
