@@ -61,7 +61,8 @@ export const accountRouter = createTRPCRouter({ //to group different routes toge
         tab: z.string(),
         done: z.boolean().optional()
     })).query(async({
-        ctx, input
+        ctx, //userId and db
+        input
     }) => {
         const account = await authoriseAccountAccess(input.accountId, ctx.auth.userId)
 
@@ -75,10 +76,32 @@ export const accountRouter = createTRPCRouter({ //to group different routes toge
             filter.sentStatus = true
         }
 
-        return await ctx.db.thread.count({
-            where: {
-                accountId: account.id,
-                ...filter
+        filter.done = {
+            equals: input.done
+        }
+
+        return await ctx.db.thread.findMany({
+            where: filter,
+            include: {
+                emails:  {//join 
+                    orderBy: {
+                        sentAt: 'asc'
+                    },
+                    select: {
+                        from: true,
+                        body: true,
+                        bodySnippet: true,
+                        emailLabel: true,
+                        subject: true,
+                        sysLabels: true,
+                        id: true,
+                        sentAt: true
+                    }
+                }, 
+            },
+            take: 15,
+            orderBy: {
+                lastMessageDate: 'desc'
             }
         })
     }),
