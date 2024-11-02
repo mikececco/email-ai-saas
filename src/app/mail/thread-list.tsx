@@ -2,9 +2,10 @@
 
 import DOMPurify from "dompurify"
 import { format, formatDistance, formatDistanceToNow } from "date-fns"
-import React from "react"
+import React, { ComponentProps } from "react"
 import useThreads from "~/hooks/use-threads"
 import { cn } from "~/lib/utils"
+import { Badge } from "~/components/ui/badge"
 
 const ThreadList = () => {
     const {threads} = useThreads()
@@ -59,6 +60,17 @@ const ThreadList = () => {
                                     }>
 
                                     </div>
+                                    {thread.emails[0]?.sysLabels.length && (
+                                        <div className="flex items-center gap-2">
+                                            {thread.emails[0]?.sysLabels.map(
+                                                label => {
+                                                    return <Badge key={label} variant={getBadgeVariantFromLabel(label)} className="text-xs font-medium">
+                                                        {label}
+                                                    </Badge>
+                                                }
+                                            )}
+                                        </div>
+                                    )}
                                 </button>
                             })
                         }
@@ -68,6 +80,13 @@ const ThreadList = () => {
         </div>
     </div>
   )
+}
+
+function getBadgeVariantFromLabel(label: string): ComponentProps<typeof Badge>['variant'] {
+    if (['work'].includes(label.toLowerCase())){
+        return 'default'
+    }
+    return 'secondary'
 }
 
 export default ThreadList
