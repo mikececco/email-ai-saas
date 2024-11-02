@@ -7,8 +7,11 @@ import useThreads from "~/hooks/use-threads"
 import { cn } from "~/lib/utils"
 import { Badge } from "~/components/ui/badge"
 
+
 const ThreadList = () => {
-    const {threads} = useThreads()
+
+    const {threads, threadId, setThreadId} = useThreads()
+
     const groupedThreads = threads?.reduce((acc, thread) => {
         const date = format(thread.emails[0]?.sentAt ?? new Date(), 'yyyy-MM-dd')
 
@@ -27,12 +30,16 @@ const ThreadList = () => {
             {
                 Object.entries(groupedThreads ?? {}).map(([date, threads]) => {
                     return <React.Fragment key={date}>
-                        <div className="text-xs font-medium text-muted-foreground mt-5 first:mt-5">
+                        <div className="text-xs font-medium text-muted-foreground mt-5 first:mt-0">
                             {date}
                         </div>
                         {
                             threads.map(thread => {
-                                return <button key={thread.id} className={cn("flex flex-col items-start gap-2 rounded-lg border p-3 text-left text-sm transition-all relative")}>
+                                return <button key={thread.id} onClick={() => setThreadId(thread.id)} className={cn("flex flex-col items-start gap-2 rounded-lg border p-3 text-left text-sm transition-all relative",
+                                    {
+                                        'bg-accent': thread.id === threadId
+                                    }
+                                )}>
                                     <div className="flex flex-col w-full gap-2">
                                         <div className="flex items-center">
                                             <div className="flex items-center gap-2">
