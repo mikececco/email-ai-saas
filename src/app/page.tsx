@@ -1,5 +1,5 @@
 import { UserButton, UserProfile } from "@clerk/nextjs";
-import LinkAccountButton from "~/components/ui/link-account-button";
+import LinkAccountButton from "~/components/link-account-button";
 
 export default async function Home() {
 
