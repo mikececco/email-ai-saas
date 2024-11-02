@@ -1,5 +1,6 @@
 'use client'
 
+import DOMPurify from "dompurify"
 import { format, formatDistance, formatDistanceToNow } from "date-fns"
 import React from "react"
 import useThreads from "~/hooks/use-threads"
@@ -51,9 +52,12 @@ const ThreadList = () => {
                                         </div>
                                     </div>
                                     <div className="text-xs line-clamp-2 text-muted-foreground" dangerouslySetInnerHTML={
-                                        {__html: thread.emails.at(-1)?.bodySnippet ?? ''}
+                                        {__html: DOMPurify.sanitize(thread.emails.at(-1)?.bodySnippet ?? '', {
+                                            USE_PROFILES: {html: true}
+                                            })
+                                        }
                                     }>
-                                        
+
                                     </div>
                                 </button>
                             })
