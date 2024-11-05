@@ -1,4 +1,3 @@
-import React from 'react'
 import { useLocalStorage } from 'usehooks-ts'
 import { api } from '~/trpc/react'
 import { atom, useAtom} from 'jotai'
