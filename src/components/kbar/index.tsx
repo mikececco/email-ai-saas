@@ -18,7 +18,7 @@ const ActualComponent = ({children}: {children: React.ReactNode}) => {
                 <KBarAnimator className="max-w-[600px] !mt-64 w-full bg-white dark:bg-gray-800 text-foreground dark:text-gray-200 shadow-lg border dark:border-gray-600 rounded-lg overflow-hidden relative !-translate-y-1">
                     <div className="bg-white dark:bg-gray-800">
                         <div className="border-x-0 border-b-2 dark:border-gray-700">
-                            <KBarSearch />
+                            <KBarSearch className="py-4 px-6 text-lg w-full bg-white dark:bg-gray-800 outline-none border-none focus:outline-none focus:ring-0 focus:ring-offset-0" />
 
                         </div>
                     </div>
