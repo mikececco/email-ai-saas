@@ -5,6 +5,7 @@ import { cn } from "~/lib/utils"
 import { RouterOutputs } from "~/trpc/react"
 import Avatar from 'react-avatar'
 import { formatDistanceToNow } from "date-fns"
+import {Letter} from 'react-letter'
 
 type Props = {
     email: RouterOutputs['account']['getThreads'][0]['emails'][0] //type of output of procedure coming from TRPC
@@ -36,9 +37,10 @@ const EmailDisplay = ({email}: Props) => {
         </div>
 
 
-        <div>
-            
+        <div className="h-4">
         </div>
+
+        <Letter html={email?.body ?? ''} className="bg-white rounded-md"/>
     </div>
   )
 }
