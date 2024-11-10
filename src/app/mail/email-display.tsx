@@ -23,12 +23,12 @@ const EmailDisplay = ({email}: Props) => {
     }>
         <div className="flex items-center justify-between gap-2">
             <div className="flex items-center justify-between gap-2">
-                {!isMe && <Avatar name={email.from.name ?? email.from.address} email={email.from.address} size="35" textSizeRatio={2} round={true} />}
-                <span>
-                    {isMe ? 'Me' : email.from.address}
-                </span>
+                {!isMe && <Avatar name={email.from.name ?? email.from.address} email={email.from.address} size='35' textSizeRatio={2} round={true} />}
+                    <span className='font-medium'>
+                        {isMe ? 'Me' : email.from.address}
+                    </span>
             </div>
-
+    
             <p className="text-sm text-muted-foreground">
                 {formatDistanceToNow(email.sentAt ?? new Date(), {
                     addSuffix: true
@@ -40,7 +40,7 @@ const EmailDisplay = ({email}: Props) => {
         <div className="h-4">
         </div>
 
-        <Letter html={email?.body ?? ''} className="bg-white rounded-md"/>
+        <Letter html={email?.body ?? ''} className="bg-white rounded-md text-black"/>
     </div>
   )
 }
