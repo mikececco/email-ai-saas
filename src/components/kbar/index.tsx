@@ -5,6 +5,7 @@ import React from "react";
 import RenderResults from "./render-results";
 import { useAtom } from "jotai";
 import { useLocalStorage } from "usehooks-ts";
+import useThemeSwitching from "./use-theme-switching";
 
 export default function KBar({children}: {children: React.ReactNode}) {
     const [_, setTab] = useLocalStorage(`email-tab`, 'inbox')
@@ -77,7 +78,7 @@ export default function KBar({children}: {children: React.ReactNode}) {
 }
 
 const ActualComponent = ({children}: {children: React.ReactNode}) => {
-
+    useThemeSwitching()
     return <>
         <KBarPortal>
             <KBarPositioner className="fixed inset-0 bg-black/40 dark:bg-black/60 backdrop-blur-sm scrollbar-hide !p-0 z-[999]">
