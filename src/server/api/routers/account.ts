@@ -31,6 +31,36 @@ export const accountRouter = createTRPCRouter({ //to group different routes toge
             }
         })
     }),
+    getEmailSuggestions: privateProcedure.input(z.object({
+        accountId: z.string(),
+        query: z.string(),
+    })).query(async ({ ctx, input }) => {
+        const account = await authoriseAccountAccess(input.accountId, ctx.auth.userId)
+        return await ctx.db.emailAddress.findMany({
+            where: {
+                accountId: input.accountId,
+                OR: [
+                    {
+                        address: {
+                            contains: input.query,
+                            mode: 'insensitive',
+                        },
+                    },
+                    {
+                        name: {
+                            contains: input.query,
+                            mode: 'insensitive',
+                        },
+                    },
+                ],
+            },
+            select: {
+                address: true,
+                name: true,
+            },
+            take: 10,
+        })
+    }),
     getNumThreads: privateProcedure.input(z.object({
         accountId: z.string(),
         tab: z.string()

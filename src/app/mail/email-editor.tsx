@@ -7,10 +7,17 @@ import { useState } from 'react'
 import EditorMenubar from './editor-menubar'
 import { Separator } from '~/components/ui/separator'
 import { Button } from '~/components/ui/button'
+import TagInput from './tag-input'
+import { useLocalStorage } from 'usehooks-ts'
+import { api } from '~/trpc/react'
 
 type Props = []
 
 const EmailEditor = (props: Props) => {
+    const [accountId] = useLocalStorage('accountId', '');
+
+    const { data: suggestions } = api.account.getEmailSuggestions.useQuery({ accountId: accountId, query: '' }, { enabled: !!accountId });
+
     const [expanded, setExpanded] = useState<boolean>(false)
     const [value, setValue] = useState<string>('')
 
@@ -43,7 +50,22 @@ const EmailEditor = (props: Props) => {
         <div className='p-4 pb-0 space-y-2'>
             {expanded && (
                 <>
-                    cc inputs
+                    <TagInput 
+                    // suggestions={suggestions?.map(s => s.address) || []} 
+                    placeholder="Add recipients" 
+                    label="To"
+                    defaultValues={[]}
+                    value={[]}
+                    onChange={console.log}
+                    />
+                    <TagInput 
+                    // suggestions={suggestions?.map(s => s.address) || []} 
+                    placeholder="Add recipients" 
+                    label="Cc"
+                    defaultValues={[]}
+                    value={[]}
+                    onChange={console.log}
+                    />
                 </>
             )}
             <div className='flex items-center gap-2'>
