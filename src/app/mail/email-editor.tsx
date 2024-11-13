@@ -11,6 +11,7 @@ import { Button } from '~/components/ui/button'
 type Props = []
 
 const EmailEditor = (props: Props) => {
+    const [expanded, setExpanded] = useState<boolean>(false)
     const [value, setValue] = useState<string>('')
 
     const CustomText = Text.extend({
@@ -38,6 +39,23 @@ const EmailEditor = (props: Props) => {
     <div>
         <div className='flex p-4 py-2 border-b'>
             <EditorMenubar editor={editor} />
+        </div>
+        <div className='p-4 pb-0 space-y-2'>
+            {expanded && (
+                <>
+                    cc inputs
+                </>
+            )}
+            <div className='flex items-center gap-2'>
+                <div className='cursor-pointer' onClick={() => setExpanded(!expanded)}>
+                    <span className='text-green-600 font-medium'>
+                        Draft {" "}
+                    </span>
+                    <span>
+                        to Elliot
+                    </span>
+                </div>
+            </div>
         </div>
         <div className='prose w-full px-4'>
             <EditorContent editor={editor} value={value} />
