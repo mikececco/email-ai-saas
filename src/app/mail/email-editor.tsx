@@ -4,6 +4,7 @@ import StarterKit from '@tiptap/starter-kit'
 import {EditorContent, useEditor} from '@tiptap/react'
 import { Text } from '@tiptap/extension-text'
 import { useState } from 'react'
+import EditorMenubar from './editor-menubar'
 
 type Props = []
 
@@ -28,8 +29,12 @@ const EmailEditor = (props: Props) => {
             setValue(editor.getHTML()) //set value of HTML version of editor
         }
     })
+
+    if (!editor) return null
+    
   return (
     <div>
+        <EditorMenubar editor={editor} />
         <div className='prose w-full px-4'>
             <EditorContent editor={editor} value={value} />
         </div>
