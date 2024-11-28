@@ -4,7 +4,6 @@ import Select from 'react-select';
 
 type TagInputProps = {
     // suggestions: string[];
-    defaultValues?: { label: string, value: string }[];
     placeholder: string;
     label: string;
 
@@ -12,7 +11,7 @@ type TagInputProps = {
     value: { label: string, value: string }[];
 };
 
-const TagInput: React.FC<TagInputProps> = ({ defaultValues = [], label, onChange, value }) => {
+const TagInput: React.FC<TagInputProps> = ({ label, onChange, value }) => {
     const [input, setInput] = useState('');
 
     // const options = suggestions.map(suggestion => ({
@@ -33,7 +32,6 @@ const TagInput: React.FC<TagInputProps> = ({ defaultValues = [], label, onChange
             className='w-full flex-1'
             isMulti
             onInputChange={setInput}
-            defaultValue={defaultValues}
             placeholder={''}
             // options={input ? options.concat({
             //     label: (

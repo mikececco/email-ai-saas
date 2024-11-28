@@ -10,15 +10,31 @@ import { Button } from '~/components/ui/button'
 import TagInput from './tag-input'
 import { useLocalStorage } from 'usehooks-ts'
 import { api } from '~/trpc/react'
+import { Input } from '~/components/ui/input'
 
-type Props = []
+type Props = {
+    subject: string
+    setSubject: (value: string) => void
 
-const EmailEditor = (props: Props) => {
+    toValues: {label: string, value: string} []
+    setToValues: (value: {label: string, value: string} []) => void
+    ccValues: {label: string, value: string} []
+    setCcValues: (value: {label: string, value: string} []) => void
+
+    to: string[]
+
+    handleSend: (value: string) => void
+    isSending: boolean
+
+    defaultToolbarExpanded?: boolean
+}
+
+const EmailEditor = ({subject, setSubject, toValues, setToValues, ccValues, setCcValues, to, handleSend, isSending, defaultToolbarExpanded}: Props) => {
     const [accountId] = useLocalStorage('accountId', '');
 
     const { data: suggestions } = api.account.getEmailSuggestions.useQuery({ accountId: accountId, query: '' }, { enabled: !!accountId });
 
-    const [expanded, setExpanded] = useState<boolean>(false)
+    const [expanded, setExpanded] = useState<boolean>(defaultToolbarExpanded || false)
     const [value, setValue] = useState<string>('')
 
     const CustomText = Text.extend({
@@ -54,18 +70,17 @@ const EmailEditor = (props: Props) => {
                     // suggestions={suggestions?.map(s => s.address) || []} 
                     placeholder="Add recipients" 
                     label="To"
-                    defaultValues={[]}
-                    value={[]}
-                    onChange={console.log}
+                    value={toValues}
+                    onChange={setToValues}
                     />
                     <TagInput 
                     // suggestions={suggestions?.map(s => s.address) || []} 
                     placeholder="Add recipients" 
                     label="Cc"
-                    defaultValues={[]}
-                    value={[]}
-                    onChange={console.log}
+                    value={ccValues}
+                    onChange={setCcValues}
                     />
+                    <Input id='subject' onChange={(e) => setSubject(e.target.value)} placeholder='Subject' value={subject}/>
                 </>
             )}
             <div className='flex items-center gap-2'>
@@ -74,7 +89,7 @@ const EmailEditor = (props: Props) => {
                         Draft {" "}
                     </span>
                     <span>
-                        to Elliot
+                        to {to.join(', ')}
                     </span>
                 </div>
             </div>
@@ -92,7 +107,10 @@ const EmailEditor = (props: Props) => {
                     </kbd>{" "}
                     for AI autocomplete
                 </span>
-                <Button>
+                <Button onClick={async () => {
+                    editor?.commands?.clearContent()
+                    await handleSend(value)
+                }} disabled={isSending}>
                     Send
                 </Button>
             </div>
